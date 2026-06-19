@@ -237,9 +237,17 @@ function editTemplate() {
   vscode.commands.executeCommand('workbench.action.openSettings', '@id:noty.dailyNoteTemplate');
 }
 
+function syncFolderContext() {
+  vscode.commands.executeCommand('setContext', 'noty.folderSet', !!getFolder());
+}
+
 function activate(context) {
   extensionId = context.extension.id;
   provider = new NotesProvider();
+  syncFolderContext();
+  context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
+    if (e.affectsConfiguration('noty.folder')) syncFolderContext();
+  }));
   context.subscriptions.push(vscode.window.createTreeView('notyView', {
     treeDataProvider: provider,
     showCollapseAll: false,

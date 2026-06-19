@@ -31,7 +31,7 @@
       ]
     },
     "viewsWelcome": [
-      { "view": "notyView", "contents": "No notes folder selected yet.\n[Choose Folder](command:noty.chooseFolder)" }
+      { "view": "notyView", "contents": "No notes folder selected yet.\n[Choose Folder](command:noty.chooseFolder)", "when": "!noty.folderSet" }
     ],
     "commands": [
       { "command": "noty.newDailyNote", "title": "New Daily Note", "category": "Noty", "icon": "$(calendar)" },
