@@ -3,7 +3,7 @@
   "displayName": "Noty",
   "description": "Browse your notes in the sidebar and create dated daily notes for journaling and worklogs.",
   "publisher": "johannwirt",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "media/icon.png",
   "license": "MIT",
   "author": { "name": "Johann Wirt" },
