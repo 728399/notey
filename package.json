@@ -1,0 +1,87 @@
+{
+  "name": "noty",
+  "displayName": "Noty",
+  "description": "Browse your notes in the sidebar and create dated daily notes for journaling and worklogs.",
+  "publisher": "johannwirt",
+  "version": "0.0.1",
+  "icon": "media/icon.png",
+  "license": "MIT",
+  "author": { "name": "Johann Wirt" },
+  "sponsor": { "url": "https://ko-fi.com/johannwirt" },
+  "repository": { "type": "git", "url": "https://github.com/728399/noty.git" },
+  "homepage": "https://github.com/728399/noty#readme",
+  "bugs": { "url": "https://github.com/728399/noty/issues" },
+  "keywords": ["notes", "daily notes", "journal", "worklog", "jira", "markdown"],
+  "engines": { "vscode": "^1.75.0" },
+  "categories": ["Other"],
+  "activationEvents": [
+    "onView:notyView",
+    "onCommand:noty.newDailyNote"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        { "id": "noty", "title": "Noty", "icon": "media/notebook.svg" }
+      ]
+    },
+    "views": {
+      "noty": [
+        { "id": "notyView", "name": "Noty" }
+      ]
+    },
+    "viewsWelcome": [
+      { "view": "notyView", "contents": "No notes folder selected yet.\n[Choose Folder](command:noty.chooseFolder)" }
+    ],
+    "commands": [
+      { "command": "noty.newDailyNote", "title": "New Daily Note", "category": "Noty", "icon": "$(calendar)" },
+      { "command": "noty.newNote", "title": "New Note", "category": "Noty", "icon": "$(new-file)" },
+      { "command": "noty.newFolder", "title": "New Folder", "category": "Noty", "icon": "$(new-folder)" },
+      { "command": "noty.refresh", "title": "Refresh", "category": "Noty", "icon": "$(refresh)" },
+      { "command": "noty.openSettings", "title": "Settings", "category": "Noty", "icon": "$(gear)" },
+      { "command": "noty.chooseFolder", "title": "Choose Folder", "category": "Noty", "icon": "$(folder-opened)" },
+      { "command": "noty.changeShortcut", "title": "Change Daily Note Shortcut", "category": "Noty", "icon": "$(record-keys)" },
+      { "command": "noty.editTemplate", "title": "Edit Daily Note Template", "category": "Noty", "icon": "$(edit)" },
+      { "command": "noty.openItem", "title": "Open Note", "category": "Noty" },
+      { "command": "noty.rename", "title": "Rename", "category": "Noty" },
+      { "command": "noty.delete", "title": "Delete", "category": "Noty" },
+      { "command": "noty.newNoteInFolder", "title": "New Note", "category": "Noty" },
+      { "command": "noty.newFolderInFolder", "title": "New Folder", "category": "Noty" }
+    ],
+    "menus": {
+      "commandPalette": [
+        { "command": "noty.newNoteInFolder", "when": "false" },
+        { "command": "noty.newFolderInFolder", "when": "false" },
+        { "command": "noty.openItem", "when": "false" },
+        { "command": "noty.rename", "when": "false" },
+        { "command": "noty.delete", "when": "false" }
+      ],
+      "view/title": [
+        { "command": "noty.newDailyNote", "when": "view == notyView", "group": "navigation@1" },
+        { "command": "noty.newNote", "when": "view == notyView", "group": "navigation@2" },
+        { "command": "noty.newFolder", "when": "view == notyView", "group": "navigation@3" },
+        { "command": "noty.refresh", "when": "view == notyView", "group": "navigation@4" },
+        { "command": "noty.openSettings", "when": "view == notyView", "group": "navigation@5" }
+      ],
+      "view/item/context": [
+        { "command": "noty.newNoteInFolder", "when": "view == notyView && viewItem == folder", "group": "1_new@1" },
+        { "command": "noty.newFolderInFolder", "when": "view == notyView && viewItem == folder", "group": "1_new@2" },
+        { "command": "noty.rename", "when": "view == notyView && viewItem =~ /file|folder/", "group": "2_edit@1" },
+        { "command": "noty.delete", "when": "view == notyView && viewItem =~ /file|folder/", "group": "2_edit@2" }
+      ]
+    },
+    "keybindings": [
+      { "command": "noty.newDailyNote", "key": "ctrl+alt+j" }
+    ],
+    "configuration": {
+      "title": "Noty",
+      "properties": {
+        "noty.folder": { "type": "string", "default": "", "order": 1, "markdownDescription": "The folder where your notes are stored. [Browse...](command:noty.chooseFolder)" },
+        "noty.dailyNoteSubfolder": { "type": "string", "default": "", "order": 2, "pattern": "^[^:*?\"<>|]*$", "patternErrorMessage": "Cannot contain : * ? \" < > |", "markdownDescription": "Subfolder where daily notes are saved, relative to your notes folder (for example, `Daily Notes`). Leave empty to keep them in the main folder." },
+        "noty.dailyNoteDateFormat": { "type": "string", "default": "YYYY-MM-DD", "order": 3, "pattern": "^[^\\\\/:*?\"<>|]+$", "patternErrorMessage": "Cannot contain \\ / : * ? \" < > |", "markdownDescription": "How daily note files are named. For example, `YYYY-MM-DD` makes `2026-06-19`, and `DD-MM-YYYY` makes `19-06-2026`." },
+        "noty.dailyNoteTemplate": { "type": "string", "default": "{date} ({day})\n\n", "order": 4, "editPresentation": "multilineText", "markdownDescription": "Text inserted into a new daily note. Use `{date}` and `{day}` as placeholders." },
+        "noty.fileExtension": { "type": "string", "default": "txt", "order": 5, "pattern": "^\\.?[A-Za-z0-9]+$", "patternErrorMessage": "Use letters and numbers only, e.g. txt or md.", "markdownDescription": "File type used for all notes, e.g. `txt` or `md`." }
+      }
+    }
+  }
+}

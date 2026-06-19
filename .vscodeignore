@@ -1,0 +1,5 @@
+.vscode/**
+.github/**
+.gitignore
+media/icon.svg
+**/*.map
